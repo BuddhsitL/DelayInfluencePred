@@ -94,7 +94,7 @@ def print_TTAT_precison(y, y_hat, algorithm='算法', dataset='测试集', Dayin
     result_4 = result[result <= 4]
     result_5 = result[result <= 5]
     result_10 = result[result <= 10]
-    acc = 100 * len(result_0) / len(y_hat)
+    acc = 100 * len(result_0) / len(y)
     lessthan1 = 100 * len(result_1) / len(y_hat)
     lessthan2 = 100 * len(result_2) / len(y_hat)
     lessthan3 = 100 * len(result_3) / len(y_hat)
