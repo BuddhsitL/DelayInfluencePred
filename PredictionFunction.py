@@ -133,6 +133,15 @@ Fiv_prediction = np.round(Fiv_Model.predict(Model_Fiv_input))
 
 '''# # # # # # 预测第六列晚点列车晚点时间# # ## # # # # '''
 
+which_train = 6
+Six_Model = joblib.load('./modelsave/%s第%s列车的晚点时间预测model.m' % (Input_Station, which_train))
+
+Model_Six_input = pd.DataFrame({"到达晚点": DDWD, "与第5列间隔时间": Six_interval, "是否停站": Whether_stop, "晚点时段": Delay_period,
+                                "前方列车是否与后方列车共用一条到发线": Whether_SameStationTrack,
+                                "以5min为间隔的理想恢复影响车数": Five_minInterval_ideal_NAT}, index=[Predict_train_index])
+Six_prediction = np.round(Six_Model.predict(Model_Six_input))
+
+
 
 if NAT_predict == 1 :
 	print('列车{}的晚点将会造成{}列车的晚点,列车{}的晚点时间分别为{}min'.format(Input_TrainNo, Influenced_trainNo,Influenced_trainNo ,DDWD))
@@ -150,10 +159,10 @@ if NAT_predict == 5:
 	print('列车{}的晚点将会造成{}列车的晚点,列车{}的晚点时间分别为{},{},{},{},{}min'.format(Input_TrainNo, Influenced_trainNo, Influenced_trainNo, DDWD,
 	                                                        Sec_prediction,Thi_prediction,Fou_prediction,Fiv_prediction))
 
-# if NAT_predict == 6:
-# 	print('列车{}的晚点将会造成{}列车的晚点,列车{}的晚点时间分别为{},{},{},{},{},{}min'.format(Input_TrainNo, Influenced_trainNo, Influenced_trainNo, DDWD,
-# 	                                                        Sec_prediction, Thi_prediction, Fou_prediction,Fiv_prediction,Six_prediction))
-#
+if NAT_predict == 6:
+	print('列车{}的晚点将会造成{}列车的晚点,列车{}的晚点时间分别为{},{},{},{},{},{}min'.format(Input_TrainNo, Influenced_trainNo, Influenced_trainNo, DDWD,
+	                                                        Sec_prediction, Thi_prediction, Fou_prediction,Fiv_prediction,Six_prediction))
+
 
 
 

@@ -132,3 +132,12 @@ def print_NAT_precison(y,y_hat,algorithm ='RF',dataset = '训练集'):
     print("{}{}precision_score：".format(algorithm, dataset),precision_score(y,y_hat,average=None))
     print("{}{}recall_score：".format(algorithm, dataset),recall_score(y,y_hat,average=None))
     print("{}{}f1_score：".format(algorithm, dataset),f1_score(y,y_hat,average=None))
+
+
+
+
+
+
+
+
+
