@@ -118,7 +118,7 @@ else:
     data1['以5min为间隔的冗余时间'] = data1['图定间隔时间'] - 5
     data1.loc[data1['以5min为间隔的冗余时间'] < 0, '以5min为间隔的冗余时间'] = 0
     # data1.to_csv('./PreProcessedData/%s车站时刻表数据.csv' % station_name, encoding='utf_8_sig')
-
+    data1.to_csv('./PreProcessedData/%s车站时刻表数据.csv' % station_name1, encoding='utf_8_sig')
     ######
     # data1 = data1.iloc[1:,]
 
@@ -127,8 +127,6 @@ else:
     data1 = pd.concat([data_insert,data1])
     data1.loc[:,"以5min为间隔的理想恢复影响车数"]=-10000
     data1.loc[:,"以5min为间隔的理想影响总时间"]=-10000
-
-
 
     ### 计算以5min为间隔的理想恢复影响车数，影响总时间，考虑停站的理想恢复影响车数，影响总时间
     col_name = data1.columns
