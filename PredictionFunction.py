@@ -18,11 +18,14 @@ Input_Station = input()
 print('请输入待预测的列车车次号')
 Input_TrainNo = input()
 
+print('请输入初始晚点列车的晚点时间')
+DDWD = int(input())
 
-print('请输入待预测的实际到达时间')
-Input_ActualArrive = input()
-Input_ActualArrive = TurnTimetoStand(Input_ActualArrive)
-Input_Date = Cal_date(str(Input_ActualArrive))
+print('请输入日期')
+Input_Date = input()
+Input_Date = Cal_date(str(Input_Date))
+
+
 
 if os.path.exists('./PreProcessedData/%s车站时刻表数据.csv' % Input_Station):
 	time_table = pd.read_csv('./PreProcessedData/%s车站时刻表数据.csv' % Input_Station)
@@ -33,9 +36,13 @@ else:
 	time_table_date = time_table.loc[time_table['日期'] == Input_Date, :].copy()
 	# time_table['日期'] = time_table['日期'].map(Cal_date)
 
+# print('请输入待预测的实际到达时间')
+# Input_ActualArrive = input()
+Input_ActualArrive = pd.to_datetime(time_table_date.loc[time_table_date['车次']==Input_TrainNo,'图定到达时间'].max()) + \
+                     pd.Timedelta(minutes = int(DDWD))
+# Input_Date = Cal_date(str(Input_ActualArrive))
 
-
-DDWD = Cal_WD(Input_ActualArrive, time_table_date.loc[time_table_date['车次']==Input_TrainNo,'图定到达时间'].max())
+# DDWD = Cal_WD(Input_ActualArrive, time_table_date.loc[time_table_date['车次']==Input_TrainNo,'图定到达时间'].max())
 Whether_stop = time_table_date.loc[time_table_date['车次']==Input_TrainNo,'是否停站'].max()
 Delay_period = Cal_DelayPeriod(Input_ActualArrive)
 time_table_date.loc[:,'与实际到达时间差值'] = list(map(Cal_WD,list(time_table_date.loc[:,'图定到达时间'].values),[Input_ActualArrive]*time_table_date.shape[0]))
@@ -56,8 +63,8 @@ from DelayDataCleaning import Cal_indicator
 
 
 cum2,k = 0,0
-Rest_SupTime = DDWD
-sum2 = DDWD
+Rest_SupTime = int(DDWD)
+sum2 = int(DDWD)
 time_table_date.loc[:,'原始索引'] = time_table_date.index.values
 time_table_date.index = range(time_table_date.shape[0])
 j = np.argwhere(np.array(time_table_date['车次'] == Input_TrainNo))[0][0]
@@ -164,9 +171,3 @@ if NAT_predict == 6:
 	                                                        Sec_prediction, Thi_prediction, Fou_prediction,Fiv_prediction,Six_prediction))
 
 
-
-
-
-
-
-np.round(4.456)

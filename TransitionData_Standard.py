@@ -16,7 +16,7 @@ mpl.rcParams['axes.unicode_minus'] = False
 pd.set_option("display.width",500)
 import operator
 import joblib
-from SomeFunction import Cal_WD,Cal_DelayPeriod,Modify_ColName,TurnTimetoStand
+from SomeFunction import Cal_WD,Cal_DelayPeriod,Modify_ColName,TurnTimetoStand,Cal_date
 
 
 def transition_data():
@@ -50,6 +50,10 @@ def transition_data():
 	######
 	print('计算到达晚点')
 	data1['到达晚点'] = [Cal_WD(data1.loc[i, '实际到达时间'], data1.loc[i, '图定到达时间']) for i in data1.index]
+
+	######
+	print('计算日期')
+	data1['日期'] = data1['图定到达时间'].map(Cal_date)
 
 	######
 	print('计算是否停站')

@@ -27,6 +27,11 @@ pd.set_option("display.width",300)
 print('请输入车站名称：')
 station_name = input()
 
+
+
+
+
+
 if os.path.exists('./AfterFeatureExtraction/%s车站晚点横向传播特征数据提取.csv'%station_name):
     print(True)
     result1 = pd.read_csv('./AfterFeatureExtraction/%s车站晚点横向传播特征数据提取.csv'%station_name,encoding = 'UTF-8')
@@ -49,6 +54,9 @@ else:
     ######
     print('计算晚点时段')
     data1['晚点时段'] = data1['实际到达时间'].map(Cal_DelayPeriod)
+
+    print('计算日期')
+    data1['日期'] = data1['图定到达时间'].map(Cal_date)
 
     ######
     print('将原始数据时间数据格式更为标准格式')
